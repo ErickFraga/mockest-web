@@ -21,6 +21,7 @@ export default {
 			fontFamily: {
 				"jockey-one": ["Jockey One", "sans-serif"],
 				kanit: ["Kanit", "sans-serif"],
+				jetbrains: ["JetBrains Mono", "monospace"],
 			},
 			colors: {
 				background: "hsl(var(--background))",
@@ -66,5 +67,19 @@ export default {
 			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		({ addUtilities }) => {
+			addUtilities({
+				// Esconde a barra de rolagem no Webkit (Chrome, Safari)
+				".scrollbar-hide::-webkit-scrollbar": {
+					display: "none",
+				},
+				// Esconde a barra de rolagem no Firefox
+				".scrollbar-hide": {
+					"scrollbar-width": "none",
+				},
+			});
+		},
+	],
 };

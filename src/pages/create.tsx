@@ -1,6 +1,4 @@
-import "./App.css";
-import { MainSideForm } from "./components/main-side-form";
-import MainRouter from "./pages";
+import { MainSideForm } from "@/components/main-side-form";
 
 const bugjsonBackground = {
 	transaction_id: "78c5e542-6ef2-43a9-8449-87c3c7fe2f72",
@@ -126,27 +124,16 @@ export const smalljsonBackground = [
 	},
 ];
 
-function App() {
+function CreatePage() {
 	document.body.style.overflow = "hidden";
 	return (
-		<div
-			className="flex w-screen h-screen bg-cover bg-center bg-main  overflow-hidden block"
-			// style={{
-			// 	backgroundImage: `url(${background})`,
-			// }}
-		>
-			<div className="bg-main-gradient backdrop-blur-[2px] w-full h-full bg-opacity-50  flex flex-row">
-				<div className="absolute blur-[6px] -top-[50px] -left-[1000px] origin-top-left rotate-[-28.99deg] text-[#9d7b01]/15 text-[80px] font-normal font-['JetBrains Mono']">
-					<pre>{JSON.stringify(bugjsonBackground, null, 4)}</pre>
-				</div>
-				<div className="absolute blur-[2px]  -top-[7px] -right-[2770px] origin-top-left rotate-[17.24deg] text-[#ffa800]/5 text-6xl font-normal font-['JetBrains Mono']">
-					<pre>{JSON.stringify(smalljsonBackground, null, 4)}</pre>
-				</div>
-
-				<MainRouter />
+		<>
+			<div className="flex flex-1 items-center justify-center h-full">
+				<div className="bg-logo w-[319px] h-[286px] bg-contain bg-no-repeat" />
 			</div>
-		</div>
+			<MainSideForm />
+		</>
 	);
 }
 
-export default App;
+export default CreatePage;

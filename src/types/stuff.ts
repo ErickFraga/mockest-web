@@ -12,4 +12,16 @@ export interface IStuffCreateParams {
 export interface IStuffCreateResponse {
 	stuffId: string;
 	slug: string;
+	url: string;
+}
+
+export interface IStuffGetResponse {
+	stuff: {
+		id: string;
+		title: string;
+		content: any;
+		url: string;
+		createdAt: string;
+		updatedAt: string;
+	};
 }

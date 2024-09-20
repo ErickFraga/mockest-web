@@ -1,13 +1,39 @@
 import { env } from "@/env";
 import { useStuff } from "@/hooks/stuff-service";
+import { smalljsonBackground } from "@/pages/create";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "lucide-react";
+import { useRef, useState } from "react";
+import AceEditor from "react-ace";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useNavigation } from "react-router-dom";
+import {
+	dracula,
+	duotoneSpace,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
 import { z } from "zod";
+import { JsonEditor } from "./json-editor";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
+
+const customTheme = {
+	...dracula,
+	'code[class*="language-"]': {
+		// #dd672c
+		// ...duotoneSpace['code[class*="language-"]'],
+		color: "#fff", // Altera a cor do texto
+	},
+	comment: {
+		color: "#6d28d999",
+	},
+
+	property: { color: "#9d4edd" }, // Cor principal (um tom mais claro de #6d28d9)
+	number: { color: "#ffeb3b" }, // Valor numérico (amarelo mais claro)
+	string: { color: "#6ee7b7" }, // Valor string (verde claro)
+	punctuation: { color: "#ffffff" }, // Pontuação (branco)
+	operator: { color: "#f9a8d4" },
+};
 
 const createMockFormValidation = z.object({
 	title: z.string().min(3, "O nome deve ter no mínimo 3 caracteres"),
@@ -26,12 +52,10 @@ const createMockFormValidation = z.object({
 	),
 });
 
-type CreateMockForm = {
-	title: string;
-	content: string;
-};
+type CreateMockForm = z.infer<typeof createMockFormValidation>;
 
 export const MainSideForm = () => {
+	const navigate = useNavigate();
 	const { createStuff } = useStuff();
 
 	const {
@@ -40,8 +64,12 @@ export const MainSideForm = () => {
 		setValue,
 		watch,
 		formState: { errors },
+		control,
 	} = useForm<CreateMockForm>({
 		resolver: zodResolver(createMockFormValidation),
+		defaultValues: {
+			// content: JSON.stringify(smalljsonBackground, null, 2),
+		},
 	});
 
 	const content = watch("content");
@@ -55,11 +83,11 @@ export const MainSideForm = () => {
 
 		if (!reponse) return;
 
-		const { slug, stuffId } = reponse;
-
-		console.log({
-			url: `${env.API_URL}/stuff/read/${slug}`,
-		});
+		const { url, slug } = reponse;
+		console.log(url);
+		if (url) {
+			navigate(`/mock/${slug}`);
+		}
 	};
 
 	const handleFormat = async () => {
@@ -72,6 +100,24 @@ export const MainSideForm = () => {
 			console.log(e);
 			// Se não for JSON, não formate
 		}
+	};
+
+	const [cursorPosition, setCursorPosition] = useState(0);
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+	// Função para capturar mudanças no textarea e posição do cursor
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setValue("content", e.target.value);
+		setCursorPosition(e.target.selectionStart); // Captura a posição do cursor
+	};
+
+	// Função para simular o cursor no texto
+	const getContentWithCursor = () => {
+		const beforeCursor = content.slice(0, cursorPosition);
+		const afterCursor = content.slice(cursorPosition);
+
+		// Inserimos um marcador de cursor (pipe '|') na posição do cursor
+		return `${beforeCursor}|${afterCursor}`;
 	};
 
 	return (
@@ -108,22 +154,9 @@ export const MainSideForm = () => {
 								{errors?.title?.message}
 							</span>
 						</div>
-						<div className="space-y-1 flex flex-col flex-grow">
-							<Label htmlFor="content">Response</Label>
-							<Textarea
-								{...register("content")}
-								placeholder={`{\n\t"teste":123\n}`}
-								className="flex-grow resize-none text-base"
-								onBlur={handleFormat}
-							/>
-							<span
-								className={`text-red-500 text-sm ${
-									errors.content ? "block" : "hidden"
-								}`}
-							>
-								{errors?.content?.message}
-							</span>
-						</div>
+
+						<JsonEditor label="JSON" control={control} name="content" />
+
 						<Button type="submit" id="" className="w-full gap-2 " size="lg">
 							<PlusCircle className="w-5" /> Criar Mock
 						</Button>
