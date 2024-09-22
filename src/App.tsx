@@ -25,9 +25,8 @@ function App() {
 						<pre
 							id="background-json"
 							ref={backgroundJsonRef}
-							className="animate-scroll-reverse"
 							style={{
-								animationDuration: `${(backgroundJsonRef?.current?.offsetHeight ?? 1) / 100}s`,
+								animation: `scroll-reverse ${(backgroundJsonRef?.current?.offsetHeight ?? 1) / 100}s linear infinite`,
 							}}
 							// style={{
 							// 	transform: `translateY(1.95%)`,
@@ -40,9 +39,8 @@ function App() {
 						<pre
 							id="foreground-json"
 							ref={foregroundJsonRef}
-							className="animate-scroll"
 							style={{
-								animationDuration: `${(foregroundJsonRef?.current?.offsetHeight ?? 1) / 120}s`,
+								animation: `scroll ${(backgroundJsonRef?.current?.offsetHeight ?? 1) / 100}s linear infinite`,
 							}}
 						>
 							{JSON.stringify(backgroundJson, null, 4)}
