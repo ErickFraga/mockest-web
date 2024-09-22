@@ -47,7 +47,7 @@ function MockPage() {
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full">
 			<a href="/" className="flex flex-row gap-3 mb-5 absolute top-5 left-6">
-				<div className="bg-mountain  w-12 h-9 bg-no-repeat bg-contain" />
+				<div className="bg-mountain w-12 h-9 bg-no-repeat bg-contain" />
 				<span className="text-3xl font-bold text-white uppercase font-jockey-one">
 					mockest
 				</span>
@@ -55,37 +55,42 @@ function MockPage() {
 			{loading ? (
 				<MockPageSkeleton />
 			) : (
-				<div className="flex-1 flex flex-col flex  w-[70svw] my-20 bg-glass bg-glass-gradient backdrop-blur-3xl rounded-xl border border-primary px-8 py-6">
-					<div className="flex flex-grow justify-between">
-						<div className="flex flex-1 felx flex-col">
-							<span className=" text-white text-[32px] font-normal font-['Kanit'] capitalize">
+				<div className="flex-1 flex flex-col w-full max-w-[90vw] sm:max-w-[80vw]  mt-20 mb-6 bg-glass bg-glass-gradient backdrop-blur-3xl rounded-xl border border-primary px-4 sm:px-6 lg:px-8 py-6">
+					<div className="flex flex-col sm:flex-row justify-between">
+						<div className="flex flex-1 flex-col">
+							<span className="text-white text-[24px] sm:text-[32px] font-normal font-['Kanit'] capitalize">
 								{mock?.stuff.title}
 							</span>
 							<span className="text-[#858585] text-xs font-light font-['JetBrains Mono'] -mt-2">
 								{slug}
 							</span>
 						</div>
-						<Tooltip open={hasCopiedContent}>
-							<TooltipTrigger asChild>
-								<Button
-									variant="outline"
-									className="bg-card/50 gap-2 text-primary font-medium border-primary text-muted-foreground hover:bg-card "
-									onClick={copyContent}
-								>
-									<Clipboard size={16} className="stroke-white" />
-									{mock?.stuff.url
-										.replace(
-											"https://mockest-api.fly.dev/stuff/read",
-											"mockest.io",
-										)
-										.slice(0, 30)}
-									...
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent align="center" side="bottom" sticky="partial">
-								{"Copiado"}
-							</TooltipContent>
-						</Tooltip>
+						<div className="mt-4 sm:mt-o mb-2 sm flex items-center">
+							<Tooltip open={hasCopiedContent}>
+								<TooltipTrigger asChild>
+									<Button
+										variant="outline"
+										className="bg-card/50 gap-2 text-primary font-medium border-primary text-muted-foreground hover:bg-card justify-start w-full sm:w-72 truncate"
+										onClick={copyContent}
+									>
+										<Clipboard size={20} className="stroke-white" />
+										<span className="truncate">
+											{
+												mock?.stuff.url
+												// .replace(
+												// 	"https://mockest-api.fly.dev/stuff/read",
+												// 	"mockest.io",
+												// )
+												// .slice(0, 30)
+											}
+										</span>
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent align="center" side="bottom" sticky="partial">
+									{"Copiado"}
+								</TooltipContent>
+							</Tooltip>
+						</div>
 					</div>
 					<JsonEditor control={control} name="content" editable={false} />
 				</div>

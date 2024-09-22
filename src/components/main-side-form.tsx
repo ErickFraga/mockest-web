@@ -95,16 +95,16 @@ export const MainSideForm = () => {
 	// };
 
 	return (
-		<div className="flex-1 flex flex-col  max-w-[38svw] bg-glass bg-glass-gradient backdrop-blur-3xl span ">
-			<div className="m-6 flex-grow flex flex-col slide-in-from-right">
+		<div className="flex-1 flex flex-col w-full max-w-[100vw] md:max-w-[60vw] lg:max-w-[38vw] bg-glass bg-glass-gradient backdrop-blur-3xl span">
+			<div className="m-4 sm:m-6 flex-grow flex flex-col slide-in-from-right">
 				<div className="flex flex-row gap-3 mb-5">
-					<div className="bg-mountain  w-12 h-9 bg-no-repeat bg-contain" />
-					<span className="text-3xl font-bold text-white uppercase font-jockey-one">
+					<div className="bg-mountain w-12 h-9 bg-no-repeat bg-contain" />
+					<span className="text-2xl sm:text-3xl font-bold text-white uppercase font-jockey-one">
 						mockest
 					</span>
 				</div>
 
-				<div className="w-[536px] text-white text-lg font-normal font-kanit mb-9">
+				<div className="w-full sm:w-[536px] text-white text-base sm:text-lg font-normal font-kanit mb-9">
 					Mock de Requisições JSON com Facilidade: Preencha o Formulário,
 					Obtenha o Link e Volte a Codar!
 				</div>
@@ -112,7 +112,7 @@ export const MainSideForm = () => {
 					className="flex flex-col flex-grow"
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className="flex flex-col flex-grow gap-4 mb-20 ">
+					<div className="flex flex-col flex-grow gap-4 mb-16 md:mb-20">
 						<div className="space-y-1">
 							<Label htmlFor="title">Nome</Label>
 							<Input
@@ -135,7 +135,7 @@ export const MainSideForm = () => {
 							type="submit"
 							id=""
 							disabled={loading}
-							className="w-full gap-2 "
+							className="w-full gap-2"
 							size="lg"
 						>
 							{loading ? (

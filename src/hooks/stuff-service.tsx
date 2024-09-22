@@ -48,6 +48,7 @@ export function StuffServiceProvider({ children }: StuffServiceProps) {
 		}: IStuffCreateParams): Promise<IStuffCreateResponse | null> => {
 			try {
 				setLoading(true);
+
 				const { data, status } = await api.post("/stuff", {
 					title,
 					raw_content: content,
@@ -91,7 +92,7 @@ export function StuffServiceProvider({ children }: StuffServiceProps) {
 		async (slug: string): Promise<IStuffGetResponse | null> => {
 			try {
 				setLoading(true);
-				// await new Promise((resolve) => setTimeout(resolve, 5000));
+				// await new Promise((resolve) => setTimeout(resolve, 500000000));
 				const { data } = await api.get(`/stuff/${slug}`);
 				setLoading(false);
 				return {
