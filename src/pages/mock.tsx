@@ -1,7 +1,6 @@
 import { JsonEditor } from "@/components/json-editor";
 import { MockPageSkeleton } from "@/components/mock-card-skeleton";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { useStuff } from "@/hooks/stuff-service";
 import type { IStuffGetResponse } from "@/types/stuff";

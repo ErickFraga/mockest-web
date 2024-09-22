@@ -1,22 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import "./App.css";
-import { MainSideForm } from "./components/main-side-form";
-import { Toaster } from "./components/ui/toaster";
 import { backgroundJson, foregroundForeground } from "./consts/scrolling-text";
 import MainRouter from "./pages";
 
 function App() {
 	document.body.style.overflow = "hidden";
-
-	const [scrollPos, setScrollPos] = useState(0);
-
-	useEffect(() => {
-		const scrollInterval = setInterval(() => {
-			setScrollPos((prevPos) => (prevPos >= 100 ? 0 : prevPos + 1));
-		}, 30);
-
-		return () => clearInterval(scrollInterval);
-	}, []);
 
 	const backgroundJsonRef = useRef<HTMLPreElement>(null);
 	const foregroundJsonRef = useRef<HTMLPreElement>(null);

@@ -1,7 +1,6 @@
 import { useStuff } from "@/hooks/stuff-service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, PlusCircle } from "lucide-react";
-import { useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -36,8 +35,8 @@ export const MainSideForm = () => {
 	const {
 		register,
 		handleSubmit,
-		setValue,
-		watch,
+		// setValue,
+		// watch,
 		formState: { errors },
 		control,
 	} = useForm<CreateMockForm>({
@@ -47,7 +46,7 @@ export const MainSideForm = () => {
 		},
 	});
 
-	const content = watch("content");
+	// const content = watch("content");
 
 	const onSubmit: SubmitHandler<CreateMockForm> = async (data) => {
 		const { title, content } = data;
@@ -65,35 +64,35 @@ export const MainSideForm = () => {
 		}
 	};
 
-	const handleFormat = async () => {
-		try {
-			console.log("blur");
-			const parsed = JSON.parse(content);
-			const formatted = JSON.stringify(parsed, null, 2);
-			setValue("content", formatted);
-		} catch (e) {
-			console.log(e);
-			// Se não for JSON, não formate
-		}
-	};
+	// const handleFormat = async () => {
+	// 	try {
+	// 		console.log("blur");
+	// 		const parsed = JSON.parse(content);
+	// 		const formatted = JSON.stringify(parsed, null, 2);
+	// 		setValue("content", formatted);
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 		// Se não for JSON, não formate
+	// 	}
+	// };
 
-	const [cursorPosition, setCursorPosition] = useState(0);
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	// const [cursorPosition, setCursorPosition] = useState(0);
+	// const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	// Função para capturar mudanças no textarea e posição do cursor aaaa
-	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setValue("content", e.target.value);
-		setCursorPosition(e.target.selectionStart); // Captura a posição do cursor sdasd
-	};
+	// const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	// 	setValue("content", e.target.value);
+	// 	setCursorPosition(e.target.selectionStart); // Captura a posição do cursor sdasd
+	// };
 
 	// Função para simular o cursor no texto
-	const getContentWithCursor = () => {
-		const beforeCursor = content.slice(0, cursorPosition);
-		const afterCursor = content.slice(cursorPosition);
+	// const getContentWithCursor = () => {
+	// 	const beforeCursor = content.slice(0, cursorPosition);
+	// 	const afterCursor = content.slice(cursorPosition);
 
-		// Inserimos um marcador de cursor (pipe '|') na posição do cursor
-		return `${beforeCursor}|${afterCursor}`;
-	};
+	// 	// Inserimos um marcador de cursor (pipe '|') na posição do cursor
+	// 	return `${beforeCursor}|${afterCursor}`;
+	// };
 
 	return (
 		<div className="flex-1 flex flex-col  max-w-[38svw] bg-glass bg-glass-gradient backdrop-blur-3xl span ">

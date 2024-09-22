@@ -5,7 +5,6 @@ import {
 	type FieldValues,
 	type Path,
 } from "react-hook-form";
-import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 
 import { cn } from "@/lib/utils";
 
