@@ -14,6 +14,18 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v3  # Atualizado para v3, que suporta Node.js 16
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Utilize a versão do Node.js compatível com seu projeto
+
+    - name: Install dependencies
+      run: npm install  # Ou "yarn install", dependendo de qual gerenciador de pacotes você usa
+      
+    - name: Build the project
+      run: npm run build  # Ou "yarn build" dependendo do seu projeto
+      # Certifique-se de que o seu package.json tem o comando de build configurado
+
     # Step 2: Deploy to Hostinger via FTP
     - name: Deploy to Hostinger via SFTP
       uses: SamKirkland/FTP-Deploy-Action@4.3.0  # Mantido como v4.3.0, que é a mais recente
@@ -22,5 +34,5 @@ jobs:
         username: ${{ secrets.HOSTINGER_FTP_USERNAME }}  # Definir como segredo no GitHub
         password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}  # Definir como segredo no GitHub
         port: 21  # Porta de FTP, geralmente 21 ou 22 para SFTP
-        local-dir: ./  # Diretório local para upload
-        server-dir: /public_html/  # Diretório remoto no servidor
+        local-dir: ./dist  # Diretório local para upload
+        server-dir: /public_html  # Diretório remoto no servidor
