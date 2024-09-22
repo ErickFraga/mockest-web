@@ -12,15 +12,15 @@ jobs:
     steps:
     # Step 1: Checkout the repository
     - name: Checkout the repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Atualizado para v3
 
-    # Step 2: Set up FTP credentials (com SFTP)
+    # Step 2: Set up FTP credentials and deploy (com SFTP)
     - name: Deploy to Hostinger via SFTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      uses: SamKirkland/FTP-Deploy-Action@4.4.0  # Atualizado para v4.4.0
       with:
-        server: ${{ secrets.HOSTINGER_FTP_SERVER }} # Definir como segredo no GitHub
-        username: ${{ secrets.HOSTINGER_FTP_USERNAME }} # Definir como segredo no GitHub
-        password: ${{ secrets.HOSTINGER_FTP_PASSWORD }} # Definir como segredo no GitHub
-        port: 21 # Porta de FTP, geralmente 21 ou 22 para SFTP
-        local-dir: ./ # Diretório local para upload
-        server-dir: /path/to/your/project # Diretório remoto no servidor
+        server: ${{ secrets.HOSTINGER_FTP_SERVER }}  # Definir como segredo no GitHub
+        username: ${{ secrets.HOSTINGER_FTP_USERNAME }}  # Definir como segredo no GitHub
+        password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}  # Definir como segredo no GitHub
+        port: 21  # Porta de FTP, geralmente 21 ou 22 para SFTP
+        local-dir: ./  # Diretório local para upload
+        server-dir: /public_html  # Diretório remoto no servidor
