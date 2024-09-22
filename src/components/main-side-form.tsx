@@ -111,7 +111,7 @@ export const MainSideForm = () => {
 		setCursorPosition(e.target.selectionStart); // Captura a posição do cursor
 	};
 
-	// Função para simular o cursor no texto asda
+	// Função para simular o cursor no texto
 	const getContentWithCursor = () => {
 		const beforeCursor = content.slice(0, cursorPosition);
 		const afterCursor = content.slice(cursorPosition);
