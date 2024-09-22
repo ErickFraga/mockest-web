@@ -23,7 +23,7 @@ jobs:
       run: yarn install  # Ou "yarn install", dependendo de qual gerenciador de pacotes você usa
       
     - name: Build the project
-      run: yarn build  # Ou "yarn build" dependendo do seu projeto
+      run: npx vite build  # Ou "yarn build" dependendo do seu projeto
       # Certifique-se de que o seu package.json tem o comando de build configurado
 
     # Step 2: Deploy to Hostinger via FTP
