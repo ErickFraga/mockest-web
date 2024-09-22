@@ -55,6 +55,8 @@ export const JsonEditor = <T extends FieldValues>({
 		},
 		readOnly: !editable,
 		domReadOnly: !editable,
+		suggestOnTriggerCharacters: false,
+		quickSuggestions: false,
 	};
 
 	useEffect(() => {
