@@ -23,4 +23,4 @@ jobs:
         password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}  # Definir como segredo no GitHub
         port: 21  # Porta de FTP, geralmente 21 ou 22 para SFTP
         local-dir: ./  # Diretório local para upload
-        server-dir: /public_html  # Diretório remoto no servidor
+        server-dir: /public_html/  # Diretório remoto no servidor
