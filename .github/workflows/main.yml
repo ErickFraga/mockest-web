@@ -20,10 +20,10 @@ jobs:
         node-version: '16'  # Utilize a versão do Node.js compatível com seu projeto
 
     - name: Install dependencies
-      run: npm install  # Ou "yarn install", dependendo de qual gerenciador de pacotes você usa
+      run: yarn install  # Ou "yarn install", dependendo de qual gerenciador de pacotes você usa
       
     - name: Build the project
-      run: npm run build  # Ou "yarn build" dependendo do seu projeto
+      run: yarn build  # Ou "yarn build" dependendo do seu projeto
       # Certifique-se de que o seu package.json tem o comando de build configurado
 
     # Step 2: Deploy to Hostinger via FTP
