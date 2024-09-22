@@ -105,10 +105,10 @@ export const MainSideForm = () => {
 	const [cursorPosition, setCursorPosition] = useState(0);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	// Função para capturar mudanças no textarea e posição do cursor
+	// Função para capturar mudanças no textarea e posição do cursor aaaa
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setValue("content", e.target.value);
-		setCursorPosition(e.target.selectionStart); // Captura a posição do cursor
+		setCursorPosition(e.target.selectionStart); // Captura a posição do cursor sdasd
 	};
 
 	// Função para simular o cursor no texto
