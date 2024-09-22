@@ -24,6 +24,9 @@ jobs:
       
     - name: Build the project
       run: npx vite build  # Ou "yarn build" dependendo do seu projeto
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
       # Certifique-se de que o seu package.json tem o comando de build configurado
 
     # Step 2: Deploy to Hostinger via FTP
