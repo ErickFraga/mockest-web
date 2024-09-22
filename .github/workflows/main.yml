@@ -12,11 +12,11 @@ jobs:
     steps:
     # Step 1: Checkout the repository
     - name: Checkout the repository
-      uses: actions/checkout@v3  # Atualizado para v3
+      uses: actions/checkout@v3  # Atualizado para v3, que suporta Node.js 16
 
-    # Step 2: Set up FTP credentials and deploy (com SFTP)
+    # Step 2: Deploy to Hostinger via FTP
     - name: Deploy to Hostinger via SFTP
-      uses: SamKirkland/FTP-Deploy-Action@4.4.0  # Atualizado para v4.4.0
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0  # Mantido como v4.3.0, que é a mais recente
       with:
         server: ${{ secrets.HOSTINGER_FTP_SERVER }}  # Definir como segredo no GitHub
         username: ${{ secrets.HOSTINGER_FTP_USERNAME }}  # Definir como segredo no GitHub
