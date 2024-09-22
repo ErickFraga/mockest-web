@@ -2,7 +2,7 @@ import { env } from "@/env";
 import { useStuff } from "@/hooks/stuff-service";
 import { smalljsonBackground } from "@/pages/create";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import AceEditor from "react-ace";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -56,7 +56,7 @@ type CreateMockForm = z.infer<typeof createMockFormValidation>;
 
 export const MainSideForm = () => {
 	const navigate = useNavigate();
-	const { createStuff } = useStuff();
+	const { loading, createStuff } = useStuff();
 
 	const {
 		register,
@@ -121,8 +121,8 @@ export const MainSideForm = () => {
 	};
 
 	return (
-		<div className="flex-1 flex flex-col  max-w-[38svw] bg-glass bg-glass-gradient backdrop-blur-3xl span">
-			<div className="m-6 flex-grow flex flex-col ">
+		<div className="flex-1 flex flex-col  max-w-[38svw] bg-glass bg-glass-gradient backdrop-blur-3xl span ">
+			<div className="m-6 flex-grow flex flex-col slide-in-from-right">
 				<div className="flex flex-row gap-3 mb-5">
 					<div className="bg-mountain  w-12 h-9 bg-no-repeat bg-contain" />
 					<span className="text-3xl font-bold text-white uppercase font-jockey-one">
@@ -157,8 +157,19 @@ export const MainSideForm = () => {
 
 						<JsonEditor label="JSON" control={control} name="content" />
 
-						<Button type="submit" id="" className="w-full gap-2 " size="lg">
-							<PlusCircle className="w-5" /> Criar Mock
+						<Button
+							type="submit"
+							id=""
+							disabled={loading}
+							className="w-full gap-2 "
+							size="lg"
+						>
+							{loading ? (
+								<Loader2 size={16} className="animate-spin" />
+							) : (
+								<PlusCircle className="w-5" />
+							)}
+							Criar Mock
 						</Button>
 					</div>
 				</form>

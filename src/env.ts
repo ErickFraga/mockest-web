@@ -2,7 +2,8 @@ import { z } from "zod";
 
 // Define your environment variables schema
 const envSchema = z.object({
-	API_URL: z.string().url().default("http://localhost:3301"),
+	VITE_API_URL: z.string().url(),
+	VITE_API_KEY: z.string().default(""),
 });
 
 // Validate environment variables using the schema

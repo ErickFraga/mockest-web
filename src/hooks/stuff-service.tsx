@@ -6,7 +6,14 @@ import type {
 	IStuffCreateResponse,
 	IStuffGetResponse,
 } from "@/types/stuff";
-import { createContext, useContext, useState } from "react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
+import { useToast } from "./use-toast";
 
 type StuffServiceProps = {
 	children: React.ReactNode;
@@ -14,7 +21,8 @@ type StuffServiceProps = {
 
 type StuffService = {
 	myStuff: IStuff[];
-	getStuff: (slug: string) => Promise<IStuffGetResponse>;
+	loading: boolean;
+	getStuff: (slug: string) => Promise<IStuffGetResponse | null>;
 	createStuff: (
 		params: IStuffCreateParams,
 	) => Promise<IStuffCreateResponse | null>;
@@ -24,52 +32,90 @@ export const StuffServiceContext = createContext<StuffService | null>(null);
 
 export function StuffServiceProvider({ children }: StuffServiceProps) {
 	const [myStuff, setMyStuff] = useState<IStuff[]>([]);
+	const [loading, setLoading] = useState(false);
 
-	async function createStuff({
-		title,
-		content,
-	}: IStuffCreateParams): Promise<IStuffCreateResponse | null> {
-		const { data, status } = await api.post("/stuff", {
-			title,
-			raw_content: content,
-		});
+	const { toast } = useToast();
 
-		if (status !== 201) {
-			return null;
-		}
+	const onError = useCallback(
+		(message: string, duration: number) => {
+			toast({
+				variant: "destructive",
+				description: message,
+				duration: duration,
+			});
+		},
+		[toast],
+	);
 
-		const stuff: IStuff = {
+	const createStuff = useCallback(
+		async ({
 			title,
 			content,
+		}: IStuffCreateParams): Promise<IStuffCreateResponse | null> => {
+			try {
+				setLoading(true);
+				const { data, status } = await api.post("/stuff", {
+					title,
+					raw_content: content,
+				});
 
-			createdAt: new Date(),
-			slug: data.slug,
-		};
+				setLoading(false);
 
-		setMyStuff((prev) => {
-			return [...prev, stuff];
-		});
-		console.log(env);
+				if (status !== 201) {
+					return null;
+				}
 
-		return {
-			stuffId: data.stuffId,
-			slug: data.slug,
-			url: `${env.API_URL}/${data.url}`,
-		};
-	}
+				const stuff: IStuff = {
+					title,
+					content,
 
-	async function getStuff(slug: string): Promise<IStuffGetResponse> {
-		const { data } = await api.get(`/stuff/${slug}`);
-		console.log(env);
+					createdAt: new Date(),
+					slug: data.slug,
+				};
 
-		return {
-			...data,
-			stuff: {
-				...data.stuff,
-				url: `${env.API_URL}${data.stuff.url}`,
-			},
-		};
-	}
+				setMyStuff((prev) => {
+					return [...prev, stuff];
+				});
+				console.log(env);
+
+				return {
+					stuffId: data.stuffId,
+					slug: data.slug,
+					url: `${env.VITE_API_URL}/${data.url}`,
+				};
+			} catch (e) {
+				console.log(e);
+				setLoading(false);
+				onError("Não foi possível criar o mock", 1000 * 5);
+				return null;
+			}
+		},
+		[onError],
+	);
+
+	const getStuff = useCallback(
+		async (slug: string): Promise<IStuffGetResponse | null> => {
+			try {
+				setLoading(true);
+				// await new Promise((resolve) => setTimeout(resolve, 5000));
+				const { data } = await api.get(`/stuff/${slug}`);
+				setLoading(false);
+				return {
+					...data,
+					stuff: {
+						...data.stuff,
+						url: `${env.VITE_API_URL}${data.stuff.url}`,
+					},
+				};
+			} catch (e) {
+				console.log(e);
+				setLoading(false);
+				onError("Mock não encontrado ou expirado", 999999999);
+				return null;
+			}
+		},
+		[onError],
+	);
 
 	return (
 		<StuffServiceContext.Provider
@@ -77,6 +123,7 @@ export function StuffServiceProvider({ children }: StuffServiceProps) {
 				myStuff,
 				createStuff,
 				getStuff,
+				loading,
 			}}
 		>
 			{children}

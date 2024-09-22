@@ -30,7 +30,7 @@ export const JsonEditor = <T extends FieldValues>({
 			horizontal: "hidden",
 		},
 		renderLineHighlight: "none",
-		glyphMargin: true,
+		// glyphMargin: true,
 		tabCompletion: "off",
 		foldingHighlight: false,
 		matchBrackets: "never",
@@ -38,6 +38,8 @@ export const JsonEditor = <T extends FieldValues>({
 		selectionHighlight: false,
 		occurrencesHighlight: "off",
 		folding: false,
+		lineNumbersMinChars: 4,
+
 		lineDecorationsWidth: 10, // Desativar a largura de decorações da linha
 		padding: {
 			top: 10,

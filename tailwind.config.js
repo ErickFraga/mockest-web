@@ -1,9 +1,25 @@
+import { reverse } from "dns";
+
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ["class"],
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			keyframes: {
+				scroll: {
+					"0%": { transform: "translateY(7%)" },
+					"100%": { transform: "translateY(-102%)" },
+				},
+				"scroll-reverse": {
+					"0%": { transform: "translateY(-99.5%)" },
+					"100%": { transform: "translateY(1.95%)" },
+				},
+			},
+			animation: {
+				scroll: "scroll linear infinite",
+				"scroll-reverse": "scroll-reverse linear infinite",
+			},
 			backgroundImage: {
 				mountain: "url('/src/assets/mountain-logo.svg')",
 				logo: "url('/src/assets/mockest-logo.svg')",
@@ -12,6 +28,8 @@ export default {
 					"radial-gradient(55.22% 53.45% at 29.85% 46.74%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.64) 100%)",
 				glass:
 					"radial-gradient(131.45% 109.12% at 40.48% 7.48%, rgba(109, 40, 217, 0.40) 0%, rgba(33, 0, 77, 0.40) 76.17%);",
+
+				text: "linear-gradient(180deg, #9D7B02 0%, rgba(55, 43, 1, 0.00) 100%);",
 			},
 			borderRadius: {
 				lg: "var(--radius)",
