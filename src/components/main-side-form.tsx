@@ -1,39 +1,14 @@
-import { env } from "@/env";
 import { useStuff } from "@/hooks/stuff-service";
-import { smalljsonBackground } from "@/pages/create";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
-import AceEditor from "react-ace";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate, useNavigation } from "react-router-dom";
-import {
-	dracula,
-	duotoneSpace,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { JsonEditor } from "./json-editor";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
-const customTheme = {
-	...dracula,
-	'code[class*="language-"]': {
-		// #dd672c
-		// ...duotoneSpace['code[class*="language-"]'],
-		color: "#fff", // Altera a cor do texto
-	},
-	comment: {
-		color: "#6d28d999",
-	},
-
-	property: { color: "#9d4edd" }, // Cor principal (um tom mais claro de #6d28d9)
-	number: { color: "#ffeb3b" }, // Valor numérico (amarelo mais claro)
-	string: { color: "#6ee7b7" }, // Valor string (verde claro)
-	punctuation: { color: "#ffffff" }, // Pontuação (branco)
-	operator: { color: "#f9a8d4" },
-};
 
 const createMockFormValidation = z.object({
 	title: z.string().min(3, "O nome deve ter no mínimo 3 caracteres"),
