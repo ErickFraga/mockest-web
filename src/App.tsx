@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Toaster } from "./components/ui/toaster";
 import { TooltipProvider } from "./components/ui/tooltip";
@@ -8,8 +8,22 @@ import MainRouter from "./pages";
 function App() {
 	document.body.style.overflow = "hidden";
 
+	const [scrollDuration, setScrollDuration] = useState("500s");
+	const [reverseScrollDuration, setReverseScrollDuration] = useState("500s");
+
 	const backgroundJsonRef = useRef<HTMLPreElement>(null);
 	const foregroundJsonRef = useRef<HTMLPreElement>(null);
+
+	useEffect(() => {
+		if (backgroundJsonRef.current) {
+			setScrollDuration(`${backgroundJsonRef.current.offsetHeight / 200}s`);
+		}
+		if (foregroundJsonRef.current) {
+			setReverseScrollDuration(
+				`${foregroundJsonRef.current.offsetHeight / 30}s`,
+			);
+		}
+	}, [foregroundForeground]);
 
 	return (
 		<TooltipProvider>
@@ -21,16 +35,14 @@ function App() {
 				// }}
 			>
 				<div className="bg-main-gradient backdrop-blur-[2px] w-full h-full bg-opacity-50  flex flex-row">
-					<div className="absolute blur-[6px] -top-[50px] -left-[40%] origin-top-left -rotate-[20deg]  text-[#BFFF00]/20 text-[80px] font-normal font-['JetBrains Mono']">
+					<div className="absolute blur-[6px] -top-[50px] -left-[55%] origin-top-left -rotate-[20deg]  text-[#BFFF00]/20 text-[80px] font-normal font-['JetBrains Mono']">
 						<pre
 							id="background-json"
 							ref={backgroundJsonRef}
+							className="animate-scroll-reverse"
 							style={{
-								animation: `scroll-reverse ${(backgroundJsonRef?.current?.offsetHeight ?? 1) / 100}s linear infinite`,
+								animationDuration: reverseScrollDuration,
 							}}
-							// style={{
-							// 	transform: `translateY(1.95%)`,
-							// }}
 						>
 							{JSON.stringify(foregroundForeground, null, 4)}
 						</pre>
@@ -39,11 +51,12 @@ function App() {
 						<pre
 							id="foreground-json"
 							ref={foregroundJsonRef}
+							className="animate-scroll"
 							style={{
-								animation: `scroll ${(backgroundJsonRef?.current?.offsetHeight ?? 1) / 100}s linear infinite`,
+								animationDuration: scrollDuration,
 							}}
 						>
-							{JSON.stringify(backgroundJson, null, 4)}
+							{JSON.stringify(foregroundForeground, null, 4)}
 						</pre>
 					</div>
 					<MainRouter />

@@ -8,12 +8,12 @@ export default {
 		extend: {
 			keyframes: {
 				scroll: {
-					"0%": { transform: "translateY(7%)" },
-					"100%": { transform: "translateY(-102%)" },
+					"0%": { transform: "translateY(3.9%)" },
+					"100%": { transform: "translateY(-100.8%)" },
 				},
 				"scroll-reverse": {
-					"0%": { transform: "translateY(-99.5%)" },
-					"100%": { transform: "translateY(1.95%)" },
+					"0%": { transform: "translateY(-99.1%)" },
+					"100%": { transform: "translateY(1.72%)" },
 				},
 			},
 			animation: {
