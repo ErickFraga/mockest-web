@@ -20,6 +20,11 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"complexity": {
+				"noForEach": {
+					"level": "off"
+				}
+			},
 			"suspicious": {
 				"noExplicitAny": {
 					"level": "off"

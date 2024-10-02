@@ -1,6 +1,8 @@
 import { env } from "@/env";
 import { api } from "@/lib/axios";
 import type {
+	IGenerateMockParams,
+	IGenerateMockResponse,
 	IStuff,
 	IStuffCreateParams,
 	IStuffCreateResponse,
@@ -16,6 +18,9 @@ type StuffServiceProps = {
 type StuffService = {
 	myStuff: IStuff[];
 	loading: boolean;
+	generateMock: (
+		params: IGenerateMockParams,
+	) => Promise<IGenerateMockResponse | null>;
 	getStuff: (slug: string) => Promise<IStuffGetResponse | null>;
 	createStuff: (
 		params: IStuffCreateParams,
@@ -39,6 +44,39 @@ export function StuffServiceProvider({ children }: StuffServiceProps) {
 			});
 		},
 		[toast],
+	);
+
+	const generateMock = useCallback(
+		async ({
+			strategy,
+			prompt,
+		}: IGenerateMockParams): Promise<IGenerateMockResponse | null> => {
+			try {
+				setLoading(true);
+
+				const response = await api.post("/generate", {
+					type: strategy,
+					input: prompt,
+				});
+
+				const { data, status } = response;
+
+				if (status !== 200) {
+					setLoading(false);
+					onError("Não foi possível criar o mock", 1000 * 5);
+					return null;
+				}
+
+				setLoading(false);
+				return data;
+			} catch (e) {
+				console.log(e);
+				setLoading(false);
+				onError("Não foi possível criar o mock", 1000 * 5);
+				return null;
+			}
+		},
+		[onError],
 	);
 
 	const createStuff = useCallback(
@@ -116,9 +154,10 @@ export function StuffServiceProvider({ children }: StuffServiceProps) {
 		<StuffServiceContext.Provider
 			value={{
 				myStuff,
+				loading,
+				generateMock,
 				createStuff,
 				getStuff,
-				loading,
 			}}
 		>
 			{children}

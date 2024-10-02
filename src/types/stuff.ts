@@ -25,3 +25,13 @@ export interface IStuffGetResponse {
 		updatedAt: string;
 	};
 }
+
+export interface IGenerateMockParams {
+	strategy: string;
+	prompt: string;
+}
+
+export interface IGenerateMockResponse {
+	success: boolean;
+	mockSuggestion: string;
+}

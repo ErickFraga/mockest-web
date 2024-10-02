@@ -1,6 +1,14 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { Label } from "@radix-ui/react-label";
+import { Snail } from "lucide-react";
+import {
+	type Control,
+	Controller,
+	type FieldValues,
+	type Path,
+} from "react-hook-form";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -22,3 +30,37 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 export { Input };
+
+export type ControlledInputProps<T extends FieldValues> =
+	React.InputHTMLAttributes<HTMLInputElement> & {
+		name: Path<T>;
+		control: Control<T>;
+		visible?: boolean;
+		label?: string;
+	};
+
+export const ControlledInput = <T extends FieldValues>({
+	control,
+	name,
+	label,
+	visible = true,
+	...props
+}: ControlledInputProps<T>) => (
+	<Controller
+		name={name}
+		control={control}
+		render={({ field, fieldState }) => (
+			<div
+				className={`${visible ? " opacity-100 translate-y-0" : "h-0 opacity-0 -translate-y-full"} space-y-1 transition-all duration-300 ease-in-out transform`}
+			>
+				<Label htmlFor={name} className={`${label ? "block" : "hidden"}`}>
+					{label}
+				</Label>
+				<Input {...field} {...props} />
+				<span className="text-red-500 text-sm">
+					{fieldState.error?.message}
+				</span>
+			</div>
+		)}
+	/>
+);
