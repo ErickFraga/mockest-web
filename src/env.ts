@@ -16,7 +16,7 @@ const parsedEnv = envSchema.safeParse({
 			: import.meta.env.VITE_API_URL,
 });
 
-// Handle validation result
+// Handle validation resul
 if (!parsedEnv.success) {
 	console.error("Invalid environment variables:", parsedEnv.error.format());
 	throw new Error("Invalid environment variables");
