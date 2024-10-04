@@ -57,8 +57,7 @@ export const MainSideForm = () => {
 
 		if (!content) return;
 
-		const response = null;
-		await createStuff({ title, content: content });
+		const response = await createStuff({ title, content: content });
 
 		if (!response) return;
 
